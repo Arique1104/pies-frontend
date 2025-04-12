@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../types/User';
+import IndividualDashboard from '../components/IndividualDashboard';
+import LeaderDashboard from '../components/LeaderDashboard';
+import OwnerDashbaord from '../components/OwnerDashboard';
+
 
 export default function Dashboard() {
     const [user, setUser] = useState<User | null>(null);
@@ -21,15 +25,9 @@ export default function Dashboard() {
     return (
         <div>
             <h2>Welcome, {user.name}!</h2>
-            {user.role === 'individual' && (
-                <p>You are an individual. Here's your PIES check-in form and stats.</p>
-            )}
-            {user.role === 'leader' && (
-                <p>You are a leader. Here's your team dashboard and check-in tools.</p>
-            )}
-            {user.role === 'owner' && (
-                <p>You are an owner. You have access to all users and team assignments.</p>
-            )}
+            {user.role === 'individual' && <IndividualDashboard/>}
+            {user.role === 'leader' && <LeaderDashboard/>}
+            {user.role === 'owner' && <OwnerDashbaord/>}
         </div>
     );
 }

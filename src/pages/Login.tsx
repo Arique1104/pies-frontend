@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from '../api/axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { User } from '../types/User';
 
 export default function Login() {
@@ -29,6 +29,9 @@ export default function Login() {
             <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
             <button type="submit">Log In</button>
+            <p>
+                Don't have an account? <Link to="/signup">Sign up here</Link>
+            </p>
         </form>
     );
 }
