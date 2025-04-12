@@ -2,7 +2,8 @@ import { useEffect, useState, useCallback } from 'react';
 import axios from '../api/axios';
 import PiesCheckinForm from './PiesCheckinForm';
 import PiesHistory from './PiesHistory';
-// import PiesTrendChart from './PiesTrendChart';
+import PiesTrendChart from './PiesTrendChart';
+import PiesRadarChart from './PiesRadarChart'
 
 interface PiesEntry {
     id: number;
@@ -46,7 +47,8 @@ export default function IndividualDashboard() {
             ) : (
                 <>
                     <p>Here’s your progress so far. ✅</p>
-                    {/* <PiesTrendChart /> */}
+                    {/* <PiesTrendChart/> */}
+                    <PiesRadarChart/>
                     <PiesHistory />
                 </>
             )}
