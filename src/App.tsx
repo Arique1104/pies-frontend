@@ -6,7 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import ProtectedRoute from './components/ProtectedRoute';
 import OwnerSignup from './pages/OwnerSignup';
-import LeaderSignup from './pages/LeaderSignup'
+import LeaderSignup from './pages/LeaderSignup.tsx';
 
 function App() {
   return (
