@@ -52,3 +52,67 @@ export default tseslint.config({
   },
 })
 ```
+# 🧠 PIES Tracker – Frontend
+
+A React + TypeScript frontend for the PIES (Physical, Intellectual, Emotional, Spiritual) Tracker, designed to support healing-centered leadership growth through daily check-ins, insights, and visualizations.
+
+---
+
+## 📦 Tech Stack
+- React (TypeScript)
+- Vite
+- Axios
+- Recharts (data visualization)
+- JWT-based auth
+
+---
+
+## 🚀 Setup
+
+```bash
+cd pies-frontend
+npm install
+npm run dev
+```
+
+Make sure your `.env` (or axios baseURL config) points to the backend:
+```ts
+axios.defaults.baseURL = 'http://localhost:3000';
+```
+
+---
+
+## 🧑‍🤝‍🧑 Roles
+
+- **Individual**: Check in daily, view personal trends and suggestions
+- **Leader**: Read-only access to reflection tips
+- **Owner**: Full control over users, unmatched keywords, and tip engine
+
+---
+
+## 🔑 Features
+
+- Role-based dashboards
+- PIES check-in form (with sliders)
+- Daily reflection engine with keyword-based tips
+- Radar and line chart visualizations
+- Responsive suggestion display logic
+- Unmatched keyword review UI (for Owners)
+- Tip manager with full CRUD (for Owners)
+- Tip search (for all roles)
+
+---
+
+## 📁 File Highlights
+- `src/components/PiesCheckinForm.tsx`
+- `src/components/PiesRadarChart.tsx`
+- `src/components/PiesSuggestions.tsx`
+- `src/components/ReflectionTipsManager.tsx`
+- `src/pages/IndividualDashboard.tsx`, `LeaderDashboard.tsx`, `OwnerDashboard.tsx`
+
+---
+
+## 🧪 Testing Locally
+- Use the secret owner signup route to create an owner user
+- Login as each role to test dashboards
+- Enter various keywords in descriptions to see suggestion matches
