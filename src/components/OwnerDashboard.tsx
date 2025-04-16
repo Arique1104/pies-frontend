@@ -13,7 +13,7 @@ export default function OwnerDashboard() {
                     onClick={() => setActiveTab('assignments')}
                     className={`px-4 py-2 rounded-t ${activeTab === 'assignments' ? 'bg-white font-bold border border-b-0' : 'bg-gray-200'}`}
                 >
-                    Assignment Dashboard
+                    Suggested Matches
                 </button>
                 <button
                     onClick={() => setActiveTab('keywords')}
