@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from '../api/axios';
+import CreateReflectionTipForm from './CreateReflectionTipForm';
+import Modal from './Modal';
 
 interface Keyword {
     id: number;
@@ -13,6 +16,7 @@ export default function UnmatchedKeywords() {
     const [keywords, setKeywords] = useState<Keyword[]>([]);
     const [addingWord, setAddingWord] = useState<Keyword | null>(null);
     const [tipText, setTipText] = useState('');
+    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
         const fetchKeywords = async () => {
@@ -23,8 +27,12 @@ export default function UnmatchedKeywords() {
                 console.error('Error fetching unmatched keywords:', err);
             }
         };
-
         fetchKeywords();
+    }, []);
+
+
+    useEffect(() => {
+        setIsClient(true);
     }, []);
 
     return (
@@ -51,13 +59,27 @@ export default function UnmatchedKeywords() {
                                     <td>{kw.word}</td>
                                     <td>{kw.category}</td>
                                     <td>{kw.count}</td>
-                                    <td><em>"{kw.example || '--'}"</em></td>
+                                    <td><em>{kw.example || '--'}</em></td>
                                     <td>
-                                        <button onClick={() => {
-                                            setAddingWord(kw);
-                                            setTipText('');
-                                        }}>
-                                            Add to Tips
+                                        <Link to={`/unmatched_keywords/${kw.id}/new_tip`}>
+                                            <button>Add to Tip</button>
+                                        </Link>
+                                        <button
+                                            className="bg-red-500 text-white px-2 py-1 rounded"
+                                            onClick={async () => {
+                                                if (confirm(`Permanently dismiss "${kw.word}"?`)) {
+                                                    try {
+                                                        await axios.post('/dismissed_keywords', { word: kw.word });
+                                                        await axios.delete(`/unmatched_keywords/${kw.id}`);
+                                                        setKeywords(keywords.filter(k => k.id !== kw.id));
+                                                    } catch (err) {
+                                                        alert('Failed to dismiss keyword.');
+                                                        console.error(err);
+                                                    }
+                                                }
+                                            }}
+                                        >
+                                            Dismiss
                                         </button>
                                     </td>
                                 </tr>
@@ -65,47 +87,23 @@ export default function UnmatchedKeywords() {
                         </tbody>
                     </table>
 
-                    {addingWord && (
-                        <div style={{ border: '1px solid #ccc', padding: '1rem', marginTop: '1rem', background: '#f9f9f9' }}>
-                            <h4>Add Tip for "{addingWord.word}"</h4>
-                            <p><strong>Category:</strong> {addingWord.category}</p>
-                            <p><strong>Quote:</strong> <em>{addingWord.example || '—'}</em></p>
-
-                            <textarea
-                                style={{ width: '100%', height: '80px' }}
-                                placeholder="Enter a tip or suggestion..."
-                                value={tipText}
-                                onChange={(e) => setTipText(e.target.value)}
-                            />
-
-                            <br />
-                            <button
-                                onClick={async () => {
-                                    try {
-                                        await axios.post('/reflection_tips', {
-                                            reflection_tip: {
-                                                word: addingWord.word,
-                                                category: addingWord.category,
-                                                tip: tipText
-                                            }
-                                        });
-                                        alert('Tip added!');
+                        {isClient && addingWord && (
+                            <Modal isOpen={!!addingWord} onClose={() => setAddingWord(null)}>
+                                <CreateReflectionTipForm
+                                    word={addingWord.word}
+                                    category={addingWord.category}
+                                    example={addingWord.example}
+                                    keywordId={addingWord.id}
+                                    onCancel={() => setAddingWord(null)}
+                                    onSuccess={() => {
                                         setAddingWord(null);
-                                        setTipText('');
-                                    } catch (err) {
-                                        alert('Failed to add tip.');
-                                    }
-                                }}
-                            >
-                                Save Tip
-                            </button>
-                            <button onClick={() => setAddingWord(null)} style={{ marginLeft: '0.5rem' }}>
-                                Cancel
-                            </button>
-                        </div>
-                    )}
+                                        fetchKeywords();
+                                    }}
+                                />
+                            </Modal>
+                        )}
                 </>
             )}
         </div>
     );
-    }
+}
