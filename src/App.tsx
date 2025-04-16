@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import ProtectedRoute from './components/ProtectedRoute';
 import OwnerSignup from './pages/OwnerSignup';
 import LeaderSignup from './pages/LeaderSignup.tsx';
+import UnmatchedKeywordTipFormPage from './components/UnmatchedKeywordTipForm.tsx';
+import UnmatchedKeywords from './components/UnmatchedKeywords.tsx';
 
 function App() {
   return (
@@ -18,7 +20,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-
+        <Route path="/unmatched_keywords" element={<UnmatchedKeywords />} />
+        <Route path="/unmatched_keywords/:id/new_tip" element={<UnmatchedKeywordTipFormPage />} />
 
         <Route path="/dashboard" element={
           <ProtectedRoute>
