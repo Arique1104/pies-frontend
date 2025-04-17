@@ -17,36 +17,50 @@ export default function Signup() {
                 name,
                 email,
                 password,
-                password_confirmation: confirm
+                password_confirmation: confirm,
             });
+
+            const user = res.data.user;
+
             localStorage.setItem('token', res.data.token);
-            localStorage.setItem('user', JSON.stringify(res.data.user));
-            navigate('/dashboard');
+            localStorage.setItem('user', JSON.stringify(user));
+
+            if (user.role === 'individual') {
+                navigate('/individual/dashboard');
+            } else if (user.role === 'leader') {
+                navigate('/leader/dashboard');
+            } else if (user.role === 'owner') {
+                navigate('/dashboard');
+            } else {
+                console.warn('Unknown role:', user.role);
+                navigate('/');
+            }
         } catch (err) {
             alert('Signup failed');
+            console.error(err);
         }
     };
 
     return (
         <form onSubmit={handleSignup}>
             <h2>Sign Up</h2>
-            
+
             <p>
                 <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
             </p>
-            
+
             <p>
                 <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </p>
-            
+
             <p>
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </p>
-            
+
             <p>
                 <input type="password" placeholder="Confirm Password" value={confirm} onChange={(e) => setConfirm(e.target.value)} />
             </p>
-            
+
             <button type="submit">Sign Up</button>
         </form>
     );
