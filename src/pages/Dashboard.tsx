@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { User } from '../types/User';
 import IndividualDashboard from '../components/IndividualDashboard';
 import LeaderDashboard from '../components/LeaderDashboard';
-import OwnerDashbaord from '../components/OwnerDashboard';
-
+import OwnerDashboard from '../components/OwnerDashboard';
 
 export default function Dashboard() {
     const [user, setUser] = useState<User | null>(null);
@@ -16,18 +15,29 @@ export default function Dashboard() {
             navigate('/login');
             return;
         }
-        const parsedUser: User = JSON.parse(stored);
-        setUser(parsedUser);
+        try {
+            const parsedUser: User = JSON.parse(stored);
+            setUser(parsedUser);
+        } catch {
+            localStorage.removeItem('user');
+            navigate('/login');
+        }
     }, [navigate]);
 
     if (!user) return <p>Loading...</p>;
 
+    const dashboards: Record<string, JSX.Element> = {
+        individual: <IndividualDashboard />,
+        leader: <LeaderDashboard />,
+        owner: <OwnerDashboard />,
+    };
+
     return (
         <div>
             <h2>Welcome, {user.name}!</h2>
-            {user.role === 'individual' && <IndividualDashboard/>}
-            {user.role === 'leader' && <LeaderDashboard/>}
-            {user.role === 'owner' && <OwnerDashbaord/>}
+            {dashboards[user.role] || (
+                <p className="text-red-500">Unknown role: {user.role}</p>
+            )}
         </div>
     );
 }
