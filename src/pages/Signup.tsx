@@ -17,22 +17,18 @@ export default function Signup() {
                 name,
                 email,
                 password,
-                password_confirmation: confirm,
+                password_confirmation: confirm
             });
 
             const user = res.data.user;
-
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(user));
 
+            // 🎯 Redirect based on role (will be "individual" only)
             if (user.role === 'individual') {
                 navigate('/individual/dashboard');
-            } else if (user.role === 'leader') {
-                navigate('/leader/dashboard');
-            } else if (user.role === 'owner') {
-                navigate('/dashboard');
             } else {
-                console.warn('Unknown role:', user.role);
+                console.warn('Unexpected role on signup:', user.role);
                 navigate('/');
             }
         } catch (err) {
@@ -43,7 +39,7 @@ export default function Signup() {
 
     return (
         <form onSubmit={handleSignup}>
-            <h2>Sign Up</h2>
+            <h2>Sign Up as an Individual</h2>
 
             <p>
                 <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
@@ -54,11 +50,21 @@ export default function Signup() {
             </p>
 
             <p>
-                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
             </p>
 
             <p>
-                <input type="password" placeholder="Confirm Password" value={confirm} onChange={(e) => setConfirm(e.target.value)} />
+                <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={confirm}
+                    onChange={(e) => setConfirm(e.target.value)}
+                />
             </p>
 
             <button type="submit">Sign Up</button>
