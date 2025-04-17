@@ -32,6 +32,14 @@ export default function Login() {
             <p>
                 Don't have an account? <Link to="/signup">Sign up here</Link>
             </p>
+           
+
+            <p className="mt-4 text-sm text-center">
+                <Link to="/forgot_password" className="text-blue-600 hover:underline">
+                    Forgot your password?
+                </Link>
+            </p>
+    
         </form>
     );
 }
