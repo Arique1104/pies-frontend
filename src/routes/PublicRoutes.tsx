@@ -6,6 +6,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 import OwnerSignup from '../pages/OwnerSignup';
 import LeaderSignup from '../pages/LeaderSignup';
+import BasicDashboard from '../components/BasicDashboard';
 
 const PublicRoutes: RouteObject[] = [
     { path: '/', element: <Home /> },
@@ -14,7 +15,9 @@ const PublicRoutes: RouteObject[] = [
     { path: '/forgot_password', element: <ForgotPassword /> },
     { path: '/reset_password', element: <ResetPassword /> },
     { path: '/secret-owner-signup', element: <OwnerSignup /> },
-    { path: '/secret-leader-signup', element: <LeaderSignup /> }
+    { path: '/secret-leader-signup', element: <LeaderSignup /> },
+    { path: '/dashboard', element: <BasicDashboard /> }
+
 ];
 
 export default PublicRoutes;

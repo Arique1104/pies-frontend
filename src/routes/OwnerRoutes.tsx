@@ -17,7 +17,7 @@ const OwnerRoutes: RouteObject[] = [
         ),
     },
     {
-        path: '/dashboard',
+        path: '/owner/dashboard',
         element: (
             <ProtectedRoute allowedRoles={['owner']}>
                 <OwnerDashboard />
