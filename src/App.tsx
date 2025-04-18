@@ -19,6 +19,7 @@ import ReflectionTipsManager from './components/ReflectionTipsManager';
 import SuggestedMatches from './components/SuggestedMatches';
 import TeamManagement from './components/TeamManagement';
 import CreateEventForm from './components/CreateEventForm';
+import EventDashboard from './components/EventDashboard';
 
 function App() {
   return (
@@ -71,6 +72,14 @@ function App() {
 
         {/* Events routes [owner and leader roles only] */}
 
+        <Route
+          path="/events/:id/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['owner', 'leader', 'individual']}>
+              <EventDashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/events/new" element={
           <ProtectedRoute allowedRoles={['owner', 'leader']}>
             <CreateEventForm />

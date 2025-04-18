@@ -1,15 +1,16 @@
 import { Navigate } from 'react-router-dom';
+import { useActiveRole } from '../hooks/useActiveRole';
 
-export default function ProtectedRoute({ children, allowedRoles = [] }) {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+interface Props {
+    allowedRoles: string[];
+    children: JSX.Element;
+}
 
-    if (!user?.role) {
-        return <Navigate to="/login" />;
-    }
+export default function ProtectedRoute({ allowedRoles, children }: Props) {
+    const { role, loading } = useActiveRole();
 
-    if (allowedRoles.length && !allowedRoles.includes(user.role)) {
-        return <Navigate to="/" />;
-    }
+    if (loading) return <p>Loading...</p>;
+    if (!role || !allowedRoles.includes(role)) return <Navigate to="/" />;
 
     return children;
 }
