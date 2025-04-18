@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import axios from '../api/axios';
 import PiesCheckinForm from './PiesCheckinForm';
 import PiesHistory from './PiesHistory';
-// import PiesTrendChart from './PiesTrendChart';
+import PiesTrendChart from './PiesTrendChart';
 import PiesRadarChart from './PiesRadarChart'
 import PiesSuggestions from './PiesSuggestions';
 
@@ -39,7 +39,8 @@ export default function IndividualDashboard() {
     return (
         <div>
             <h3>Individual Dashboard</h3>
-
+    
+        
             {!hasCheckedInToday ? (
                 <>
                     <p>You haven’t checked in today yet. 🌞</p>
