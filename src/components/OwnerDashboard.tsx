@@ -1,9 +1,10 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 
 export default function OwnerDashboard() {
     const linkBaseStyle = 'block px-4 py-2 rounded hover:bg-blue-100';
     const activeStyle = 'bg-white font-semibold border-l-4 border-blue-500 text-blue-700';
-
+    const navigate = useNavigate();
+    
     return (
         <div className="flex h-screen">
             {/* Sidebar Navigation */}
@@ -57,6 +58,12 @@ export default function OwnerDashboard() {
                     >
                         <button className="w-full px-4 py-2">Reflection Tips</button>
                     </NavLink>
+                    <button
+                        onClick={() => navigate('/events/new')}
+                        className="bg-blue-600 text-white px-4 py-2 rounded"
+                    >
+                        Create New Event
+                    </button>
                 </nav>
             </aside>
 

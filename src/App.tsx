@@ -18,6 +18,7 @@ import UnmatchedKeywords from './components/UnmatchedKeywords';
 import ReflectionTipsManager from './components/ReflectionTipsManager';
 import SuggestedMatches from './components/SuggestedMatches';
 import TeamManagement from './components/TeamManagement';
+import CreateEventForm from './components/CreateEventForm';
 
 function App() {
   return (
@@ -67,6 +68,15 @@ function App() {
           <Route path="unmatched_keywords" element={<UnmatchedKeywords />} />
           <Route path="reflection_tips" element={<ReflectionTipsManager userRole="owner" />} />
         </Route>
+
+        {/* Events routes [owner and leader roles only] */}
+
+        <Route path="/events/new" element={
+          <ProtectedRoute allowedRoles={['owner', 'leader']}>
+            <CreateEventForm />
+          </ProtectedRoute>
+        } />
+
       </Routes>
     </BrowserRouter>
   );
